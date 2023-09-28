@@ -1,0 +1,12 @@
+{% macro render_text_field(field) %}
+
+<div class="mb-2">
+    {{ field.label(class_="label") }}
+    {{ field(class_="input input-bordered input-sm bg-base-100 text-base-content w-full max-w-xs")}}
+
+    {%- for error in field.errors %}
+        <span class="alert alert-error">{{ error }}</span>
+    {% endfor %}
+</div>
+
+{% endmacro %}

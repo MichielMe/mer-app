@@ -1,0 +1,49 @@
+{% macro header(email, theme) %}
+<header class="p-0 px-8 border-b-4 border-neutral">
+    <div class=" navbar max-w-6xl mx-auto px-20">
+        <a href="{{ url_for('main.index') }}" class="navbar-start items-center h-16 text-inherit no-underline hover:text-accent">
+            <svg xmlns="http://www.w3.org/2000/svg" class="justify-center w-8 h-8 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
+            </svg>
+            <span class="ml-2 uppercase font-black text-2xl items-center">Watchlist</span>
+        </a>
+        <div class="navbar-end bg-base-100">
+            {% if not email %}
+                <!-- <div class="flex-1"> -->
+                    <a href="#" class="items-center px-2 text-inherit no-underline hover:text-accent">
+                        <span class="font-semibold tracking-wide uppercase">Log in</span>
+                    </a>
+                    <a href="#" class="items-center px-2 text-inherit no-underline hover:text-accent">
+                        <span class="font-semibold tracking-wide uppercase hover:text-accent">Register</span>
+                    </a>
+
+                <!-- </div> -->
+            {% else %}
+                    <a href="{{ url_for('main.index') }}" class="flex items-center px-2 text-inherit no-underline">
+                        <span class="font-semibold tracking-wide uppercase">Movies</span>
+                    </a>
+                    <a href="#">
+                        <span class="font-semibold tracking-wide uppercase">Logout</span>
+                    </a>
+            {% endif %}
+            
+            <!-- <input type="checkbox" class="justify-center ml-4 toggle" checked /> -->
+            <a href="{{ url_for('main.toggle_theme', current_page=request.path) }}" class="justify-center ml-4">
+                {% if session.get('theme') == 'business' %}
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+                    </svg>
+                {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+                    </svg>
+                {% endif %}
+            </a>
+            
+        </div>
+    </div>
+</header>
+
+
+{% endmacro %}
+

@@ -45,12 +45,12 @@ def logout():
 @main.route("/")
 @login_required
 def index():
-    return render_template("index.html")
+    return render_template("index.html", active_page='home')
 
 @main.route("/app_01", methods=["GET", "POST"])
 @login_required
 def app_01():
-    return render_template("app1.html")
+    return render_template("app1.html", active_page='app1')
 
 # TOGGLE THEME -------------------------------------------------------------
 

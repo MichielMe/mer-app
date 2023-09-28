@@ -3,48 +3,6 @@
 {% endblock %}
 {% block main_content %}
 
-    {% if movies_data %}
-        <div class="overflow-x-auto">
-            <table class="table">
-                <!-- head -->
-                <thead>
-                    <tr>
-                    <th>Title</th>
-                    <th>Release Date</th>
-                    <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for movie in movies_data %}
-                        <tr>
-                            <td>
-                                <p class="font-bold text-base">{{ movie.title }}</p>
-                                <p>{{ movie.director }}</p>
-                            </td>
-                            <td>{{ movie.year }}</td>
-                            <td><a href="{{ url_for('main.movie', _id=movie._id) }}" class="btn btn-sm btn-primary">View</a></td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    {% else %}
-        <div class="alert max-w-lg mx-auto shadow-xl">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            <span>You haven't added any movies yet.</span>
-            <div>
-            <a class="btn btn-sm btn-primary" href="{{ url_for('main.add_movie') }}">Add Movie</a>
-            </div>
-        </div>
-    {% endif %}
-    <div class="flex absolute bottom-20 right-9">
-        <a href="{{ url_for('main.add_movie') }}" class="btn btn-circle btn-outline border-2">
-            <span>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                </svg>
-            </span>
-        </a>
-    </div>
+    
 
 {% endblock %}

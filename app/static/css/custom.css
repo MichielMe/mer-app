@@ -1,0 +1,16 @@
+@font-face {
+    font-family: 'RoobertVRT-Regular';
+    src: url('../fonts/RoobertVRT-Regular.otf') format('opentype');
+}
+@font-face {
+    font-family: 'RoobertVRT-SemiBold';
+    src: url('../fonts/RoobertVRT-SemiBold.otf') format('opentype');
+}
+@font-face {
+    font-family: 'RoobertVRT-Bold';
+    src: url('../fonts/RoobertVRT-Bold.otf') format('opentype');
+}
+@font-face {
+    font-family: 'RoobertVRT-Light';
+    src: url('../fonts/RoobertVRT-Light.otf') format('opentype');
+}

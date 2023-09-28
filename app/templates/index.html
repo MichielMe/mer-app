@@ -3,6 +3,24 @@
 {% endblock %}
 {% block main_content %}
 
-    
+    <div class="container mx-auto flex justify-center">
+        <p class="text-6xl font-roobertbold">Eindregie Apps</p>
+    </div>
+    <div class="container w-2/5 mx-auto mt-20 flex justify-center">
+    <div class="grid grid-cols-2 gap-4">
+            <div>
+                <a href="{{ url_for('main.app_01') }}" class="btn text-4xl text-base-100 btn-secondary w-60 h-40">APP 1</a>
+            </div>
+            <div>
+                <a href="#" class="btn text-4xl text-base-100 btn-secondary w-60 h-40">APP 2</a>
+            </div>
+            <div>
+                <a href="#" class="btn text-4xl text-base-100 btn-secondary w-60 h-40">APP 3</a>
+            </div>
+            <div>
+                <a href="#" class="btn text-4xl text-base-100 btn-secondary w-60 h-40">APP 4</a>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}

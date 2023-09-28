@@ -1,11 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import IntegerField, StringField, SubmitField
-from wtforms.validators import InputRequired, NumberRange
+from wtforms import IntegerField, StringField, SubmitField, PasswordField
+from wtforms.validators import DataRequired
 
-class MovieForm(FlaskForm):
-    title = StringField("Title", validators=[InputRequired()])
-    director = StringField("Director")
-
-    year = IntegerField("Year")
-    
-    submit = SubmitField("Add Movie")
+class LoginForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Login')

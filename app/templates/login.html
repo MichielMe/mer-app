@@ -1,0 +1,24 @@
+{% from "macros/fields.html" import render_text_field %}
+
+<!DOCTYPE html>
+<html lang="en" data-theme="vrttheme">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}">
+    <link href="{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet">
+    <title>MER APP | Log In</title>
+</head>
+<body>
+    <form action="{{ url_for('main.login') }}" method="post" novalidate class="card card-compact w-80 shadow-xl bg-neutral text-neutral-content mx-auto mt-48">
+        <div class="form-control card-body items-center w-full">
+            {{ form.hidden_tag() }}
+            {{ render_text_field(form.username) }}
+            {{ render_text_field(form.password) }}
+        </div>
+        <div class="card-actions justify-end">
+            {{ form.submit(class_="btn btn-sm btn-primary mb-6 mr-6") }}
+        </div>
+    </form>
+</body>
+</html>

@@ -8,21 +8,10 @@
             <span class="pt-1 font-roobertbold text-4xl">Eindregie</span>
         </a>
         <div class="navbar-end bg-base-100">
-            {% if not email %}
-                <!-- <div class="flex-1"> -->
-                    <a href="#" class="px-2 no-underline hover:text-secondary">
-                        <span class="font-roobertbold text-2xl uppercase">Log in</span>
-                    </a>
 
-                <!-- </div> -->
-            {% else %}
-                    <a href="{{ url_for('main.index') }}" class="flex items-center px-2 text-inherit no-underline">
-                        <span class="font-roobertbold tracking-wide uppercase">Movies</span>
+                    <a href="{{ url_for('main.logout') }}" class="px-2 no-underline hover:text-secondary">
+                        <span class="font-roobertbold text-2xl uppercase">Log Out</span>
                     </a>
-                    <a href="#">
-                        <span class="font-roobertbold tracking-wide uppercase">Logout</span>
-                    </a>
-            {% endif %}
             
             <!-- <a href="{{ url_for('main.toggle_theme', current_page=request.path) }}" class="justify-center ml-4">
                 {% if session.get('theme') == 'business' %}

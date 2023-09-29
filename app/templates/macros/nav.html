@@ -10,7 +10,13 @@
         <div class="navbar-end bg-base-100">
 
                     <a href="{{ url_for('main.app_01') }}" class="px-2 no-underline hover:text-secondary  {{ 'text-accent' if request.path == url_for('main.app_01') }}">
-                        <span class="font-roobertbold uppercase">App 1</span>
+                        <span class="font-roobertbold uppercase">Bulk Edit</span>
+                    </a>
+                    <a href="{{ url_for('main.app_02') }}" class="px-2 no-underline hover:text-secondary  {{ 'text-accent' if request.path == url_for('main.app_02') }}">
+                        <span class="font-roobertbold uppercase">Erai</span>
+                    </a>
+                    <a href="https://rto365.sharepoint.com/sites/MERincidentenrapport" class="px-2 no-underline hover:text-secondary">
+                        <span class="font-roobertbold uppercase">Regieverslag</span>
                     </a>
                     <a href="{{ url_for('main.index') }}" class="px-2 no-underline hover:text-secondary  {{ 'text-accent' if request.path == url_for('main.index') }}">
                         <span class="font-roobertbold uppercase">Home</span>

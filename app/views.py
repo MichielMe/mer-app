@@ -52,6 +52,16 @@ def index():
 def app_01():
     return render_template("app1.html", active_page='app1')
 
+@main.route("/app_02", methods=["GET", "POST"])
+@login_required
+def app_02():
+    return render_template("app2.html", active_page='app2')
+
+@main.route("/app_03", methods=["GET", "POST"])
+@login_required
+def app_03():
+    return render_template("index.html")
+
 # TOGGLE THEME -------------------------------------------------------------
 
 @main.get("/toggle_theme")

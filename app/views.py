@@ -20,6 +20,10 @@ class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
+    
+class BulkEdit():
+    pass
+    
 
 @main.route('/login', methods=['GET', 'POST'])
 def login():
@@ -50,7 +54,8 @@ def index():
 @main.route("/app_01", methods=["GET", "POST"])
 @login_required
 def app_01():
-    return render_template("app1.html", active_page='app1')
+    form = BulkEdit()
+    return render_template("app1.html", form=form)
 
 @main.route("/app_02", methods=["GET", "POST"])
 @login_required

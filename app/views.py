@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, session, url_for, request, flash
+from flask import Blueprint, render_template, redirect, session, url_for, request, flash, jsonify
 from flask_login import login_user, logout_user, login_required, UserMixin, current_user
 from app import login_manager
 from flask_wtf import FlaskForm
@@ -59,7 +59,8 @@ def index():
 @login_required
 def app_01():
     form = UploadForm()
-    material_tests = session.get('material_tests', None)  # Get material_tests from session
+    material_tests = session.get('material_tests', None)
+    # Get material_tests from session
     if form.validate_on_submit():
         # 1. Read the uploaded Excel file
         file = form.file.data
@@ -93,11 +94,15 @@ def app_01():
         # 4. Commit changes to the database
         # db.session.commit()
         # materials = Material.query.all()
+        print(session['material_tests'])
         
         flash("Database updated successfully!", "success")
+        
         return redirect(url_for(".app_01"))
         
     return render_template("app1.html", form=form, material_tests=material_tests)
+
+
 
 @main.route("/app_02", methods=["GET", "POST"])
 @login_required

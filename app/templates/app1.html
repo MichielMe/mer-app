@@ -30,32 +30,22 @@
         </form>
     </div>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <div class="alert alert-succes">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
+
 
     <!-- The modal structure -->
     <dialog id="confirmModal" class="modal">
         <div class="modal-box">
-        <h2 class="text-xl">Bevestig</h2>
-        <p>Ben je zeker dat je de volgende aanpassingen wilt uitvoeren?</p>
-        <table class="table">
-            {% if material_tests %}
-                <ul>
-                {% for item in material_tests %}
-                    <li>{{ item }}</li>
-                {% endfor %}
-                </ul>
-            {% endif %}
-        </table>
+        <h2 class="text-xl">Confirm Changes</h2>
+        <p>Are you sure you want to edit the following materials?</p>
+        {% if material_tests %}
+            <ul>
+            {% for item in material_tests %}
+                <li>{{ item }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
         <div class="modal-action">
-            <button class="btn" onclick="closeModalAndSubmit()">JA</button>
+            <button class="btn" onclick="closeModalAndSubmit()">Yes, Confirm</button>
             <button class="btn btn-error" onclick="closeModal()">Cancel</button>
         </div>
         </div>

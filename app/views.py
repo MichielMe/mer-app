@@ -98,7 +98,7 @@ def app_01():
         
         flash("Database updated successfully!", "success")
         
-        return redirect(url_for(".app_01"))
+        return render_template("app1.html", form=form, material_tests=material_tests)
         
     return render_template("app1.html", form=form, material_tests=material_tests)
 

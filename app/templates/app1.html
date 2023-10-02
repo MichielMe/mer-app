@@ -7,14 +7,83 @@
         <p class="text-6xl font-roobertbold">Buld Edit Database</p>
     </div>
 
-    <form action="#" method="post" novalidate class="card w-80 shadow-xl mx-auto mt-48">
-        <div class="form-control card-body items-center w-full">
-     
+    <div class="container mx-auto mt-10 max-w-xl bg-base-200">  
+        <form action="{{ url_for('main.app_01') }}" id="myForm" enctype="multipart/form-data" method="post" novalidate class="card shadow-xl mx-auto px-10">
+            <div class="form-control card-body">
+                {{ form.hidden_tag() }}
+                
+                <div class="mb-2">
+                    {{ form.file.label(class_="label") }}
+                    {{ form.file(class_="file-input file-input-bordered w-full w-full")}}
+                
+                    {%- for error in form.file.errors %}
+                        <span class="alert alert-error">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {{ render_text_field(form.suffix) }}
+                {{ render_text_field(form.replace_text) }}
+                {{ render_text_field(form.material_type) }}
+            </div>
+            <div class="card-actions justify-end">
+                {{ form.submit(class_="btn btn-primary mb-6 mr-6 text-2xl font-semibold") }}
+            </div>
+        </form>
+    </div>
 
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-succes">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- The modal structure -->
+    <dialog id="confirmModal" class="modal">
+        <div class="modal-box">
+        <h2 class="text-xl">Bevestig</h2>
+        <p>Ben je zeker dat je de volgende aanpassingen wilt uitvoeren?</p>
+        <table class="table">
+            {% if material_tests %}
+                <ul>
+                {% for item in material_tests %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        </table>
+        <div class="modal-action">
+            <button class="btn" onclick="closeModalAndSubmit()">JA</button>
+            <button class="btn btn-error" onclick="closeModal()">Cancel</button>
         </div>
-        <div class="card-actions justify-end">
-
         </div>
-    </form>
+    </dialog>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const myForm = document.getElementById('myForm');
+            
+            myForm.addEventListener('submit', function(event) {
+              event.preventDefault(); // always prevent default first
+              openModal();
+            });
+          });
+          
+          function openModal() {
+            const modal = document.getElementById('confirmModal');
+            modal.showModal();
+          }
+          
+          function closeModal() {
+            const modal = document.getElementById('confirmModal');
+            modal.close();
+          }
+          
+          function closeModalAndSubmit() {
+            closeModal();
+            document.getElementById('myForm').submit();
+          }
+      </script>
 {% endblock %}

@@ -4,6 +4,10 @@ from app import login_manager
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired
+from .pyscripts.forms import UploadForm
+import pandas as pd
+from .models import Material
+
 
 
 main = Blueprint("main", __name__)
@@ -20,10 +24,7 @@ class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
-    
-class BulkEdit():
-    pass
-    
+
 
 @main.route('/login', methods=['GET', 'POST'])
 def login():
@@ -49,23 +50,64 @@ def logout():
 @main.route("/")
 @login_required
 def index():
-    return render_template("index.html", active_page='home')
+    return render_template("index.html")
+
+
+# APPS -------------------------------------------------------------
 
 @main.route("/app_01", methods=["GET", "POST"])
 @login_required
 def app_01():
-    form = BulkEdit()
-    return render_template("app1.html", form=form)
+    form = UploadForm()
+    material_tests = session.get('material_tests', None)  # Get material_tests from session
+    if form.validate_on_submit():
+        # 1. Read the uploaded Excel file
+        file = form.file.data
+        df = pd.read_excel(file)
+        material_ids = df.iloc[:, 0].values.tolist()  # Als de ID's in de eerste column staan.
+     
+        # # 2. Filter the database based on MATERIAL IDs
+        # materials_to_update = Material.query.filter(
+        #     Material.material_id.in_(material_ids)
+        # ).all()
+
+        # 3. Modify the title and material type columns
+        replace_text = form.replace_text.data
+        suffix = form.suffix.data
+        material_type = form.material_type.data
+
+        # for material in materials_to_update:
+        #     if replace_text:
+        #         material.title = material.title.replace(replace_text, suffix)
+        #     else:
+        #         material.title += " " + suffix
+
+        #     material.material_type = material_type
+        material_tests = [
+            material_ids,
+            replace_text,
+            suffix,
+            material_type
+        ]
+        session['material_tests'] = material_tests  # Store material_tests in session
+        # 4. Commit changes to the database
+        # db.session.commit()
+        # materials = Material.query.all()
+        
+        flash("Database updated successfully!", "success")
+        return redirect(url_for(".app_01"))
+        
+    return render_template("app1.html", form=form, material_tests=material_tests)
 
 @main.route("/app_02", methods=["GET", "POST"])
 @login_required
 def app_02():
-    return render_template("app2.html", active_page='app2')
+    return render_template("app2.html")
 
 @main.route("/app_03", methods=["GET", "POST"])
 @login_required
 def app_03():
-    return render_template("index.html")
+    return render_template("app3.html")
 
 # TOGGLE THEME -------------------------------------------------------------
 

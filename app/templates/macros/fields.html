@@ -1,8 +1,8 @@
 {% macro render_text_field(field) %}
 
-<div class="mb-2">
+<div class="mb-6">
     {{ field.label(class_="label") }}
-    {{ field(class_="input input-bordered input-sm text-neutral w-full max-w-xs")}}
+    {{ field(class_="input input-bordered text-neutral w-full")}}
 
     {%- for error in field.errors %}
         <span class="alert alert-error">{{ error }}</span>

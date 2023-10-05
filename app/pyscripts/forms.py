@@ -29,3 +29,12 @@ class UploadForm(FlaskForm):
     )
     
     submit = SubmitField("GO")
+
+
+
+class ExcelUploadForm(FlaskForm):
+    file = FileField('Excel File', validators=[
+        FileRequired(),
+        FileAllowed(['xlsx'], 'Excel files only!')
+    ])
+    submit = SubmitField('Upload and Generate')

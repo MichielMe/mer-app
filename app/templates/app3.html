@@ -1,3 +1,4 @@
+{% from "macros/fields.html" import render_text_field %}
 {% extends 'base.html' %}
 
 {% block main_content %}
@@ -6,14 +7,45 @@
     <p class="text-6xl font-roobertbold">Excel Naar Schedule</p>
 </div>
 
-<form action="#" method="post" novalidate class="card w-80 shadow-xl mx-auto mt-48">
-    <div class="form-control card-body items-center w-full">
- 
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="container mx-auto mt-10 max-w-xl">
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} mb-4">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
 
-    </div>
-    <div class="card-actions justify-end">
+<div class="container mx-auto mt-10 max-w-xl bg-base-200">  
+    <form action="{{ url_for('main.app_03') }}" id="FormXL" enctype="multipart/form-data" method="post" novalidate class="card shadow-xl mx-auto px-10">
+        <div class="form-control card-body">
+            {{ form.hidden_tag() }}
+            
+            <div class="mb-2">
+                {{ form.file.label(class_="label") }}
+                {{ form.file(class_="file-input file-input-bordered w-full w-full")}}
+            
+                {%- for error in form.file.errors %}
+                    <span class="alert alert-error">{{ error }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="card-actions justify-end">
+            {{ form.submit(class_="btn btn-primary mb-6 mr-6 text-2xl font-semibold") }}
+        </div>
+    </form>
+</div>
+{% if download_link %}
+    <p>Generated URL: {{ download_link }}</p>
+{% endif %}
+{% if download_link %}
+<div class="container mx-auto mt-10 max-w-xl bg-base-200">  
+    <a href="{{ download_link }}" class="btn btn-primary mb-6 mr-6 text-2xl font-semibold block mx-auto">Download .sch File</a>
+</div>
+{% endif %}
 
-    </div>
-</form>
 
 {% endblock %}

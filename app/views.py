@@ -1,16 +1,20 @@
-from flask import Blueprint, render_template, redirect, session, url_for, request, flash, jsonify
+from flask import Blueprint, render_template, redirect, session, url_for, request, flash, jsonify, send_from_directory
 from flask_login import login_user, logout_user, login_required, UserMixin, current_user
 from app import login_manager
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired
-from .pyscripts.forms import UploadForm
+from .pyscripts.forms import UploadForm, ExcelUploadForm
+from .pyscripts.xlnaarpl import parse_excel_and_generate_playlist
 import pandas as pd
 from .models import Material
-
-
+import os
+from werkzeug.utils import secure_filename
 
 main = Blueprint("main", __name__)
+
+UPLOAD_FOLDER = 'app/uploads'
+ALLOWED_EXTENSIONS = {'xlsx'}
 
 class User(UserMixin):
     def __init__(self, id):
@@ -112,7 +116,38 @@ def app_02():
 @main.route("/app_03", methods=["GET", "POST"])
 @login_required
 def app_03():
-    return render_template("app3.html")
+    form = ExcelUploadForm()
+    download_link = None  # Link to download the generated .sch file
+
+    if form.validate_on_submit():
+        if not os.path.exists(UPLOAD_FOLDER):
+            os.makedirs(UPLOAD_FOLDER)
+
+        file = form.file.data
+        filename = secure_filename(file.filename)
+        filepath = os.path.join(UPLOAD_FOLDER, filename)
+        file.save(filepath)
+        
+        # Process the file using the refactored script
+        output_filepath = parse_excel_and_generate_playlist(filepath)
+        
+        if output_filepath:
+            # File processed successfully, generate a download link
+            download_link = url_for('main.download', filename=output_filepath.name)  # Using the name attribute of PurePath
+            flash('File processed successfully!', 'success')
+        else:
+            # There was an error processing the file
+            flash('An error occurred while processing the file. Please try again.', 'error')
+
+    return render_template("app3.html", form=form, download_link=download_link)
+
+@main.route('/download/<filename>', methods=["GET"])
+@login_required
+def download(filename):
+    return send_from_directory(UPLOAD_FOLDER, filename, as_attachment=True)
+
+
+
 
 # TOGGLE THEME -------------------------------------------------------------
 

@@ -3,30 +3,31 @@
 {% endblock %}
 {% block main_content %}
 
-    <div class="container mx-auto flex justify-center">
-        <p class="text-6xl font-roobertbold">Eindregie Apps</p>
-    </div>
-    <div class="container w-2/5 mx-auto mt-20 flex justify-center">
-    <div class="grid grid-cols-3 gap-8 gap-x-16">
-            <div>
-                <a href="{{ url_for('main.app_01') }}" class="btn text-4xl text-base-100 btn-secondary w-60 h-40">Bulk Edit</a>
-            </div>
-            <!-- <div>
-                <a href="{{ url_for('main.app_02') }}" class="btn text-4xl text-base-100 btn-secondary w-60 h-40">Erai</a>
-            </div> -->
-            <div>
-                <a href="{{ url_for('main.app_03') }}" class="btn text-2xl text-base-100 btn-secondary w-60 h-40">Excel Naar Schedule</a>
-            </div>
-            <div>
-                <a href="https://rto365.sharepoint.com/sites/MERincidentenrapport" target="_blank" class="btn text-2xl text-base-100 btn-secondary w-60 h-40">Regieverslag</a>
-            </div>
-            <div>
-                <a href="http://scheduall.vrt.be/reports/General%20New/TIP%20Dienstrooster%20uitzendregisseurs.html" target="_blank" class="btn text-2xl text-base-100 btn-secondary w-60 h-40">Planning</a>
-            </div>
-            <div>
-                <a href="#" class="btn text-4xl text-base-100 btn-secondary w-60 h-40">APP 4</a>
-            </div>
+<div class="container mx-auto flex justify-center">
+    <p class="text-4xl sm:text-5xl md:text-6xl font-roobertbold">Eindregie Apps</p>
+</div>
+<div class="container w-full sm:w-4/5 md:w-2/5 mx-auto mt-10 md:mt-20 flex justify-center">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8 md:gap-x-16">
+        <div>
+            <a href="{{ url_for('main.app_01') }}" class="btn text-xl sm:text-2xl md:text-4xl text-base-100 btn-secondary w-full sm:w-50 md:w-60 h-24 sm:h-32 md:h-40">Bulk Edit</a>
+        </div>
+        <!-- <div>
+            <a href="{{ url_for('main.app_02') }}" class="btn text-xl sm:text-2xl md:text-4xl text-base-100 btn-secondary w-40 sm:w-50 md:w-60 h-24 sm:h-32 md:h-40">Erai</a>
+        </div> -->
+        <div>
+            <a href="{{ url_for('main.app_03') }}" class="btn text-xl sm:text-2xl md:text-4xl text-base-100 btn-secondary w-full sm:w-50 md:w-60 h-24 sm:h-32 md:h-40">Excel Naar Schedule</a>
+        </div>
+        <div>
+            <a href="https://rto365.sharepoint.com/sites/MERincidentenrapport" target="_blank" class="btn text-xl sm:text-2xl md:text-4xl text-base-100 btn-secondary w-40 sm:w-50 md:w-60 h-24 sm:h-32 md:h-40">Regieverslag</a>
+        </div>
+        <div>
+            <a href="http://scheduall.vrt.be/reports/General%20New/TIP%20Dienstrooster%20uitzendregisseurs.html" target="_blank" class="btn text-xl sm:text-2xl md:text-4xl text-base-100 btn-secondary w-40 sm:w-50 md:w-60 h-24 sm:h-32 md:h-40">Planning</a>
+        </div>
+        <div>
+            <a href="#" class="btn text-xl sm:text-2xl md:text-4xl text-base-100 btn-secondary w-40 sm:w-50 md:w-60 h-24 sm:h-32 md:h-40">APP 4</a>
         </div>
     </div>
+</div>
+
 
 {% endblock %}

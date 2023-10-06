@@ -15,9 +15,6 @@ def create_app():
     app.secret_key = 'michiel watchlist app'
     app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
     db.init_app(app)
-    with app.app_context():
-        for rule in app.url_map.iter_rules():
-            print(rule)
     
     # Flask-Login configuration
     login_manager.init_app(app)

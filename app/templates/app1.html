@@ -7,8 +7,8 @@
         <p class="text-6xl font-roobertbold">Buld Edit Database</p>
     </div>
 
-    <div class="container mx-auto mt-10 max-w-xl bg-base-200">  
-        <form action="{{ url_for('main.app_01') }}" id="myForm" enctype="multipart/form-data" method="post" novalidate class="card shadow-xl mx-auto px-10">
+    <div class="container mx-auto mt-10 max-w-xl">  
+        <form action="{{ url_for('main.app_01') }}" id="myForm" enctype="multipart/form-data" method="post" novalidate class="card shadow-xl mx-auto px-10 bg-base-200">
             <div class="form-control card-body">
                 {{ form.hidden_tag() }}
                 

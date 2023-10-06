@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, session, url_for, request, flash, jsonify, send_from_directory
+from flask import Blueprint, render_template, redirect, session, url_for, request, flash, jsonify, send_from_directory, send_file, current_app
 from flask_login import login_user, logout_user, login_required, UserMixin, current_user
 from app import login_manager
 from flask_wtf import FlaskForm
@@ -13,7 +13,7 @@ from werkzeug.utils import secure_filename
 
 main = Blueprint("main", __name__)
 
-UPLOAD_FOLDER = 'app/uploads'
+UPLOAD_FOLDER = '/uploads'
 ALLOWED_EXTENSIONS = {'xlsx'}
 
 class User(UserMixin):
@@ -141,12 +141,17 @@ def app_03():
 
     return render_template("app3.html", form=form, download_link=download_link)
 
-@main.route('/download/<filename>', methods=["GET"])
-@login_required
+@main.route('/uploads/<path:filename>', methods=["GET", "POST"])
 def download(filename):
     return send_from_directory(UPLOAD_FOLDER, filename, as_attachment=True)
 
 
+
+# @app.route("/uploads/<path:name>")
+#     def download_file(name):
+#         return send_from_directory(
+#             app.config['UPLOAD_FOLDER'], name, as_attachment=True
+#         )
 
 
 # TOGGLE THEME -------------------------------------------------------------

@@ -7,45 +7,36 @@
     <p class="text-6xl font-roobertbold">Excel Naar Schedule</p>
 </div>
 
-{% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        <div class="container mx-auto mt-10 max-w-xl">
-            {% for category, message in messages %}
-                <div class="alert alert-{{ category }} mb-4">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-{% endwith %}
-
-<div class="container mx-auto mt-10 max-w-xl bg-base-200">  
-    <form action="{{ url_for('main.app_03') }}" id="FormXL" enctype="multipart/form-data" method="post" novalidate class="card shadow-xl mx-auto px-10">
+<div class="container mx-auto mt-10 max-w-xl">  
+    <form action="{{ url_for('main.app_03') }}" id="FormXL" enctype="multipart/form-data" method="post" novalidate class="card shadow-xl mx-auto px-10 bg-base-200">
         <div class="form-control card-body">
             {{ form.hidden_tag() }}
             
             <div class="mb-2">
                 {{ form.file.label(class_="label") }}
-                {{ form.file(class_="file-input file-input-bordered w-full w-full")}}
+                {{ form.file(class_="file-input file-input-bordered file-input-secondary w-full w-full")}}
             
                 {%- for error in form.file.errors %}
                     <span class="alert alert-error">{{ error }}</span>
                 {% endfor %}
             </div>
         </div>
-        <div class="card-actions justify-end">
-            {{ form.submit(class_="btn btn-primary mb-6 mr-6 text-2xl font-semibold") }}
+        <div class="card-actions justify-center">
+            {{ form.submit(class_="btn btn-secondary btn-outline mb-6 mr-6 tracking-wide") }}
         </div>
+        {% if download_link %}
+            <div class="mx-auto mt-2 max-w-xl justify-center">  
+                <a href="{{ download_link }}" class="btn btn-lg btn-outline btn-secondary mb-6 mr-6 text-2xl mx-auto">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-8 h-8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                    </svg>                      
+                </a>
+            </div>
+        {% endif %}
     </form>
 </div>
-{% if download_link %}
-    <p>Generated URL: {{ download_link }}</p>
-{% endif %}
-{% if download_link %}
-<div class="container mx-auto mt-10 max-w-xl bg-base-200">  
-    <a href="{{ download_link }}" class="btn btn-primary mb-6 mr-6 text-2xl font-semibold block mx-auto">Download .sch File</a>
-</div>
-{% endif %}
+
+
 
 
 {% endblock %}

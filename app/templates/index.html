@@ -3,31 +3,33 @@
 {% endblock %}
 {% block main_content %}
 
-<div class="container mx-auto flex justify-center">
-    <p class="text-4xl sm:text-5xl md:text-6xl font-roobertbold">Eindregie Apps</p>
+<div class="container mx-auto flex justify-center py-5 md:py-10">
+    <p class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-roobertbold">Eindregie Apps</p>
 </div>
-<div class="container w-full sm:w-4/5 md:w-2/5 mx-auto mt-10 md:mt-20 flex justify-center">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8 md:gap-x-16">
+<div class="container w-full sm:w-4/5 md:w-2/5 lg:w-1/2 xl:w-3/5 mx-auto mt-8 md:mt-12 lg:mt-16">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 xl:gap-10">
         <div>
-            <a href="{{ url_for('main.app_01') }}" class="btn text-xl sm:text-2xl md:text-4xl text-base-100 btn-secondary w-full sm:w-50 md:w-60 h-24 sm:h-32 md:h-40">Bulk Edit</a>
+            <a href="{{ url_for('main.app_01') }}" class="btn btn-lg btn-outline btn-secondary w-full">Bulk Edit</a>
         </div>
         <!-- <div>
-            <a href="{{ url_for('main.app_02') }}" class="btn text-xl sm:text-2xl md:text-4xl text-base-100 btn-secondary w-40 sm:w-50 md:w-60 h-24 sm:h-32 md:h-40">Erai</a>
+            <a href="{{ url_for('main.app_02') }}" class="btn text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl text-base-100 btn-secondary w-36 sm:w-48 lg:w-56 h-20 sm:h-28 lg:h-36">Erai</a>
         </div> -->
         <div>
-            <a href="{{ url_for('main.app_03') }}" class="btn text-xl sm:text-2xl md:text-4xl text-base-100 btn-secondary w-full sm:w-50 md:w-60 h-24 sm:h-32 md:h-40">Excel Naar Schedule</a>
+            <a href="{{ url_for('main.app_03') }}" class="btn btn-lg btn-outline btn-secondary w-full">Excel Naar Schedule</a>
         </div>
         <div>
-            <a href="https://rto365.sharepoint.com/sites/MERincidentenrapport" target="_blank" class="btn text-xl sm:text-2xl md:text-4xl text-base-100 btn-secondary w-40 sm:w-50 md:w-60 h-24 sm:h-32 md:h-40">Regieverslag</a>
+            <a href="https://rto365.sharepoint.com/sites/MERincidentenrapport" target="_blank" class="btn btn-lg btn-outline btn-secondary w-full">Regieverslag</a>
         </div>
         <div>
-            <a href="http://scheduall.vrt.be/reports/General%20New/TIP%20Dienstrooster%20uitzendregisseurs.html" target="_blank" class="btn text-xl sm:text-2xl md:text-4xl text-base-100 btn-secondary w-40 sm:w-50 md:w-60 h-24 sm:h-32 md:h-40">Planning</a>
+            <a href="http://scheduall.vrt.be/reports/General%20New/TIP%20Dienstrooster%20uitzendregisseurs.html" target="_blank" class="btn btn-lg btn-outline btn-secondary w-full">Planning</a>
         </div>
         <div>
-            <a href="#" class="btn text-xl sm:text-2xl md:text-4xl text-base-100 btn-secondary w-40 sm:w-50 md:w-60 h-24 sm:h-32 md:h-40">APP 4</a>
+            <a href="https://myapps.vrt.be/RDWeb/Pages/en-US/Default.aspx" target="_blank" class="btn btn-lg btn-outline btn-secondary w-full">myApps</a>
+        </div>
+        <div>
+            <a href="https://vrt-prod.atlassian.net/wiki/spaces/ET/pages/11469160/Contactpersonen+algemeen" target="_blank" class="btn btn-lg btn-outline btn-secondary w-full">Confluence</a>
         </div>
     </div>
 </div>
-
 
 {% endblock %}

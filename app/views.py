@@ -56,6 +56,10 @@ def logout():
 def index():
     return render_template("index.html")
 
+@main.route("/testing")
+def testing():
+    return render_template("testing.html")
+
 
 # APPS -------------------------------------------------------------
 

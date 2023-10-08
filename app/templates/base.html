@@ -3,7 +3,7 @@
 
 <!DOCTYPE html>
 <!-- <html lang="en" data-theme="{{ 'business' if session.get('theme') == 'business' else 'emerald' }}"> -->
-<html lang="en" data-theme="vrttheme">
+<html lang="en" data-theme="vrttheme" style="background-image: url('https://source.unsplash.com/random/?technology');" class="bg-fixed bg-cover bg-center">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +15,7 @@
 
     {% block head_content %} {% endblock %}
 </head>
-<body class="flex flex-col h-screen font-roobert">
+<body class="flex flex-col h-screen font-roobert backdrop-grayscale bg-white/60">
 {{ header() }}
     <main class="main flex-grow p-12 pt-12 pb-8">
         {% block main_content %}

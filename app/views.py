@@ -4,12 +4,15 @@ from app import login_manager
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired
-from .pyscripts.forms import UploadForm, ExcelUploadForm
+from .pyscripts.forms import UploadForm, ExcelUploadForm, ColorForm
 from .pyscripts.xlnaarpl import parse_excel_and_generate_playlist
 import pandas as pd
 from .models import Material
 import os
 from werkzeug.utils import secure_filename
+from openpyxl import load_workbook
+from openpyxl.styles import PatternFill, Font
+
 
 main = Blueprint("main", __name__)
 
@@ -67,48 +70,30 @@ def testing():
 @login_required
 def app_01():
     form = UploadForm()
-    material_tests = session.get('material_tests', None)
-    # Get material_tests from session
+    material_data = session.get('material_data', {})
+    show_modal = False
+
     if form.validate_on_submit():
-        # 1. Read the uploaded Excel file
+        
         file = form.file.data
         df = pd.read_excel(file)
-        material_ids = df.iloc[:, 0].values.tolist()  # Als de ID's in de eerste column staan.
-     
-        # # 2. Filter the database based on MATERIAL IDs
-        # materials_to_update = Material.query.filter(
-        #     Material.material_id.in_(material_ids)
-        # ).all()
-
-        # 3. Modify the title and material type columns
-        replace_text = form.replace_text.data
-        suffix = form.suffix.data
-        material_type = form.material_type.data
-
-        # for material in materials_to_update:
-        #     if replace_text:
-        #         material.title = material.title.replace(replace_text, suffix)
-        #     else:
-        #         material.title += " " + suffix
-
-        #     material.material_type = material_type
-        material_tests = [
-            material_ids,
-            replace_text,
-            suffix,
-            material_type
-        ]
-        session['material_tests'] = material_tests  # Store material_tests in session
-        # 4. Commit changes to the database
-        # db.session.commit()
-        # materials = Material.query.all()
-        print(session['material_tests'])
+        material_ids = df.iloc[:, 0].values.tolist()
         
-        flash("Database updated successfully!", "success")
+        material_data = {
+            "ids": material_ids,
+            "replace_text": form.replace_text.data,
+            "suffix": form.suffix.data,
+            "material_type": form.material_type.data
+        }
         
-        return render_template("app1.html", form=form, material_tests=material_tests)
+        session['material_data'] = material_data
+        print(f"after session {material_data}")
         
-    return render_template("app1.html", form=form, material_tests=material_tests)
+        show_modal = True
+        
+        return render_template("app1.html", form=form, material_data=material_data, show_modal=show_modal)
+        
+    return render_template("app1.html", form=form, material_data=material_data, show_modal=show_modal)
 
 
 
@@ -150,12 +135,80 @@ def download(filename):
     return send_from_directory(UPLOAD_FOLDER, filename, as_attachment=True)
 
 
+@main.route("/app_04", methods=["GET", "POST"])
+@login_required
+def app_04():
+    color_mapping = {
+        "yellow": "FFFFCD34",
+        "red": "FFDC2626",
+        "blue": "FF60A5FA",
+        "orange": "FFFB923C",
+    }
+    file_uploaded = False  # or False based on your logic
 
-# @app.route("/uploads/<path:name>")
-#     def download_file(name):
-#         return send_from_directory(
-#             app.config['UPLOAD_FOLDER'], name, as_attachment=True
-#         )
+    form = ColorForm()
+    if form.validate_on_submit():
+        # Hanlde the file upload
+        if "file" not in request.files:
+            return "No file part."
+        file = request.files["file"]
+        filename = secure_filename(file.filename)
+        upload_dir = "uploads"
+        if not os.path.exists(upload_dir):
+            os.makedirs(upload_dir)  # Create directory if it doesn't exist
+        filepath = os.path.join(upload_dir, filename)
+        print("Saving file as:", filepath)
+        file.save(filepath)
+
+        # Load the workbook
+        book = load_workbook(filepath)
+
+        # Define the target texts and fill colors
+        target_texts_colors = {
+            "VRT": PatternFill(
+                start_color=color_mapping[form.programma.data],
+                end_color=color_mapping[form.programma.data],
+                fill_type="solid",
+            ),
+            "KT_2023WEEK": PatternFill(
+                start_color=color_mapping[form.wrap.data],
+                end_color=color_mapping[form.wrap.data],
+                fill_type="solid",
+            ),
+            "V00": PatternFill(
+                start_color=color_mapping[form.ondertiteling.data],
+                end_color=color_mapping[form.ondertiteling.data],
+                fill_type="solid",
+            ),
+        }
+
+        # Define the font style
+        font_style = Font(bold=True)
+
+        # Apply conditional formatting
+        for sheet in book.worksheets:
+            for row in sheet.iter_rows():
+                for cell in row:
+                    if cell.value is not None:
+                        for target_text in target_texts_colors.keys():
+                            if target_text in str(cell.value):
+                                cell.fill = target_texts_colors[target_text]
+                                cell.font = font_style
+                                break
+
+        # Save the workbook
+        book.save(filepath)
+
+        return redirect(url_for("main.download2", filename=filename))
+    return render_template("app4.html", form=form, file_uploaded=file_uploaded)
+
+@main.route("/download/<filename>")
+def download2(filename):
+    filepath = os.path.join(os.getcwd(), "uploads", filename)
+    if os.path.exists(filepath):
+        return send_file(filepath, as_attachment=True)
+    else:
+        return f"Error: File '{filename}' not found.", 404
 
 
 # TOGGLE THEME -------------------------------------------------------------

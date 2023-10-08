@@ -1,0 +1,59 @@
+{% from "macros/fields.html" import render_text_field %}
+{% extends 'base.html' %}
+
+{% block main_content %}
+
+<div class="container mx-auto px-40 flex justify-center">
+    <p class="text-6xl font-roobertbold">Afdruk Playlist</p>
+</div>
+
+<div class="card">
+    <form method="POST" enctype="multipart/form-data">
+      {{ form.csrf_token }}
+      <script>
+        function updateLabel(inputElement) {
+          var labelElement = document.querySelector(
+            'label[for="file-upload"]'
+          );
+          if (inputElement.files.length > 0) {
+            var fileName = inputElement.files[0].name;
+            labelElement.innerHTML =
+              '✔ <span class="file-name">' + fileName + "</span>";
+            labelElement.style.color = "green";
+          } else {
+            labelElement.innerHTML = "Upload File";
+            labelElement.style.color = "black";
+          }
+        }
+      </script>
+
+      <p>
+        <label for="file-upload" class="custom-file-upload">
+          Upload File
+        </label>
+        <input
+          id="file-upload"
+          type="file"
+          name="file"
+          onchange="updateLabel(this);"
+        /><br />
+      </p>
+      <p class="tussen">Format</p>
+      <p class="dropdowns">
+        {{ form.programma.label }}<br />
+        {{ form.programma }}
+      </p>
+      <p class="dropdowns">
+        {{ form.wrap.label }}<br />
+        {{ form.wrap }}
+      </p>
+      <p class="dropdowns">
+        {{ form.ondertiteling.label }}<br />
+        {{ form.ondertiteling }}
+      </p>
+      <p class="sogo">
+        <input type="submit" value="GO" />
+      </p>
+    </form>
+
+{% endblock %}

@@ -28,9 +28,7 @@ class UploadForm(FlaskForm):
         validators=[DataRequired()],
     )
     
-    submit = SubmitField("GO")
-
-
+    go_submit = SubmitField("GO")
 
 class ExcelUploadForm(FlaskForm):
     file = FileField('Excel File', validators=[
@@ -38,3 +36,34 @@ class ExcelUploadForm(FlaskForm):
         FileAllowed(['xlsx'], 'Excel files only!')
     ])
     submit = SubmitField('Upload and Generate')
+    
+    
+class ColorForm(FlaskForm):
+    programma = SelectField(
+        "Programma Kleur",
+        choices=[
+            ("yellow", "GEEL"),
+            ("red", "ROOD"),
+            ("blue", "BLAUW"),
+            ("orange", "ORANJE"),
+        ],
+    )
+    wrap = SelectField(
+        "Wrap Kleur",
+        choices=[
+            ("yellow", "GEEL"),
+            ("red", "ROOD"),
+            ("blue", "BLAUW"),
+            ("orange", "ORANJE"),
+        ],
+    )
+    ondertiteling = SelectField(
+        "Ondertiteling Kleur",
+        choices=[
+            ("yellow", "GEEL"),
+            ("red", "ROOD"),
+            ("blue", "BLAUW"),
+            ("orange", "ORANJE"),
+        ],
+    )
+    submit = SubmitField("GO")

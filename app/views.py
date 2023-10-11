@@ -211,6 +211,11 @@ def download2(filename):
         return f"Error: File '{filename}' not found.", 404
 
 
+@main.route("/app_05", methods=["GET", "POST"])
+@login_required
+def app_05():
+    return render_template("app5.html")
+
 # TOGGLE THEME -------------------------------------------------------------
 
 @main.get("/toggle_theme")

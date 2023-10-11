@@ -4,11 +4,11 @@
 {% block main_content %}
 
     <div class="container mx-auto px-40 flex justify-center">
-        <p class="text-6xl font-roobertbold">Buld Edit Database</p>
+        <p class="text-6xl font-roobertbold text-neutral">Buld Edit Database</p>
     </div>
 
     <div class="container mx-auto mt-10 max-w-xl">  
-        <form action="{{ url_for('main.app_01') }}" id="myForm2" enctype="multipart/form-data" method="post" novalidate class="card shadow-2xl mx-auto px-10 bg-base-200">
+        <form action="{{ url_for('main.app_01') }}" id="myForm2" enctype="multipart/form-data" method="post" novalidate class="card shadow-2xl mx-auto px-10 glass">
             <div class="form-control card-body">
                 {{ form.hidden_tag() }}
                 

@@ -3,10 +3,10 @@
 {% endblock %}
 {% block main_content %}
 
-<div class="container mx-auto flex justify-center py-5 md:py-10">
-    <p class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-roobertbold text-neutral">Eindregie Apps</p>
+<div class="container mx-auto px-40 flex justify-center">
+    <p class="text-6xl font-roobertbold text-neutral">Eindregie Apps</p>
 </div>
-<div class="container w-full sm:w-4/5 md:w-2/5 lg:w-1/2 xl:w-3/5 mx-auto mt-8 md:mt-12 lg:mt-16">
+<div class="container w-full sm:w-4/5 md:w-2/5 lg:w-1/2 xl:w-3/5 mx-auto mt-4 md:mt-8 lg:mt-10 glass p-10 rounded-2xl shadow-2xl">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 xl:gap-10">
         <div>
             <a href="{{ url_for('main.app_01') }}" class="btn btn-lg btn-outline border-2 btn-neutral font-roobertbold w-full">Bulk Edit</a>

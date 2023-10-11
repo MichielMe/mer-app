@@ -2322,6 +2322,49 @@ html {
   }
 }
 
+.glass,
+  .glass.btn-active {
+  border: none;
+  -webkit-backdrop-filter: blur(var(--glass-blur, 40px));
+          backdrop-filter: blur(var(--glass-blur, 40px));
+  background-color: transparent;
+  background-image: linear-gradient(
+        135deg,
+        rgb(255 255 255 / var(--glass-opacity, 30%)) 0%,
+        rgb(0 0 0 / 0%) 100%
+      ),
+      linear-gradient(
+        var(--glass-reflex-degree, 100deg),
+        rgb(255 255 255 / var(--glass-reflex-opacity, 10%)) 25%,
+        rgb(0 0 0 / 0%) 25%
+      );
+  box-shadow: 0 0 0 1px rgb(255 255 255 / var(--glass-border-opacity, 10%)) inset,
+      0 0 0 2px rgb(0 0 0 / 5%);
+  text-shadow: 0 1px rgb(0 0 0 / var(--glass-text-shadow-opacity, 5%));
+}
+
+@media (hover: hover) {
+  .glass.btn-active {
+    border: none;
+    -webkit-backdrop-filter: blur(var(--glass-blur, 40px));
+            backdrop-filter: blur(var(--glass-blur, 40px));
+    background-color: transparent;
+    background-image: linear-gradient(
+          135deg,
+          rgb(255 255 255 / var(--glass-opacity, 30%)) 0%,
+          rgb(0 0 0 / 0%) 100%
+        ),
+        linear-gradient(
+          var(--glass-reflex-degree, 100deg),
+          rgb(255 255 255 / var(--glass-reflex-opacity, 10%)) 25%,
+          rgb(0 0 0 / 0%) 25%
+        );
+    box-shadow: 0 0 0 1px rgb(255 255 255 / var(--glass-border-opacity, 10%)) inset,
+        0 0 0 2px rgb(0 0 0 / 5%);
+    text-shadow: 0 1px rgb(0 0 0 / var(--glass-text-shadow-opacity, 5%));
+  }
+}
+
 .btn-sm {
   height: 2rem;
   padding-left: 0.75rem;
@@ -2603,10 +2646,6 @@ html {
   margin-top: 15rem;
 }
 
-.mt-8 {
-  margin-top: 2rem;
-}
-
 .block {
   display: block;
 }
@@ -2743,6 +2782,10 @@ html {
   gap: 1rem;
 }
 
+.rounded-2xl {
+  border-radius: 1rem;
+}
+
 .border-2 {
   border-width: 2px;
 }
@@ -2789,8 +2832,8 @@ html {
   background-color: transparent;
 }
 
-.bg-white\/80 {
-  background-color: rgb(255 255 255 / 0.8);
+.bg-white\/75 {
+  background-color: rgb(255 255 255 / 0.75);
 }
 
 .bg-cover {
@@ -2815,6 +2858,10 @@ html {
 
 .p-0 {
   padding: 0px;
+}
+
+.p-10 {
+  padding: 2.5rem;
 }
 
 .p-12 {
@@ -2848,11 +2895,6 @@ html {
 .px-6 {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
-}
-
-.py-5 {
-  padding-top: 1.25rem;
-  padding-bottom: 1.25rem;
 }
 
 .py-6 {
@@ -3045,8 +3087,8 @@ html {
 }
 
 @media (min-width: 768px) {
-  .md\:mt-12 {
-    margin-top: 3rem;
+  .md\:mt-8 {
+    margin-top: 2rem;
   }
 
   .md\:w-2\/5 {
@@ -3061,25 +3103,15 @@ html {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .md\:py-10 {
-    padding-top: 2.5rem;
-    padding-bottom: 2.5rem;
-  }
-
   .md\:text-2xl {
     font-size: 1.5rem;
     line-height: 2rem;
   }
-
-  .md\:text-5xl {
-    font-size: 3rem;
-    line-height: 1;
-  }
 }
 
 @media (min-width: 1024px) {
-  .lg\:mt-16 {
-    margin-top: 4rem;
+  .lg\:mt-10 {
+    margin-top: 2.5rem;
   }
 
   .lg\:flex {
@@ -3121,11 +3153,6 @@ html {
   .lg\:text-3xl {
     font-size: 1.875rem;
     line-height: 2.25rem;
-  }
-
-  .lg\:text-6xl {
-    font-size: 3.75rem;
-    line-height: 1;
   }
 }
 

@@ -2015,24 +2015,6 @@ html {
   outline-color: hsl(var(--bc) / 0.2);
 }
 
-.file-input-secondary {
-  --tw-border-opacity: 1;
-  border-color: hsl(var(--s) / var(--tw-border-opacity));
-}
-
-.file-input-secondary:focus {
-  outline-color: hsl(var(--s) / 1);
-}
-
-.file-input-secondary::file-selector-button {
-  --tw-border-opacity: 1;
-  border-color: hsl(var(--s) / var(--tw-border-opacity));
-  --tw-bg-opacity: 1;
-  background-color: hsl(var(--s) / var(--tw-bg-opacity));
-  --tw-text-opacity: 1;
-  color: hsl(var(--sc) / var(--tw-text-opacity));
-}
-
 .file-input-disabled,
   .file-input[disabled] {
   cursor: not-allowed;
@@ -2765,8 +2747,8 @@ html {
   border-width: 2px;
 }
 
-.border-b-4 {
-  border-bottom-width: 4px;
+.border-b-2 {
+  border-bottom-width: 2px;
 }
 
 .border-l-4 {
@@ -2807,8 +2789,8 @@ html {
   background-color: transparent;
 }
 
-.bg-white\/60 {
-  background-color: rgb(255 255 255 / 0.6);
+.bg-white\/80 {
+  background-color: rgb(255 255 255 / 0.8);
 }
 
 .bg-cover {
@@ -2989,6 +2971,12 @@ html {
 
 .no-underline {
   text-decoration-line: none;
+}
+
+.shadow-2xl {
+  --tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .shadow-xl {

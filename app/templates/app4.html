@@ -7,53 +7,57 @@
     <p class="text-6xl font-roobertbold">Afdruk Playlist</p>
 </div>
 
-<div class="card">
-    <form method="POST" enctype="multipart/form-data">
-      {{ form.csrf_token }}
-      <script>
-        function updateLabel(inputElement) {
-          var labelElement = document.querySelector(
-            'label[for="file-upload"]'
-          );
-          if (inputElement.files.length > 0) {
-            var fileName = inputElement.files[0].name;
-            labelElement.innerHTML =
-              '✔ <span class="file-name">' + fileName + "</span>";
-            labelElement.style.color = "green";
-          } else {
-            labelElement.innerHTML = "Upload File";
-            labelElement.style.color = "black";
-          }
-        }
-      </script>
-
-      <p>
-        <label for="file-upload" class="custom-file-upload">
-          Upload File
-        </label>
-        <input
-          id="file-upload"
-          type="file"
-          name="file"
-          onchange="updateLabel(this);"
-        /><br />
-      </p>
-      <p class="tussen">Format</p>
-      <p class="dropdowns">
-        {{ form.programma.label }}<br />
-        {{ form.programma }}
-      </p>
-      <p class="dropdowns">
-        {{ form.wrap.label }}<br />
-        {{ form.wrap }}
-      </p>
-      <p class="dropdowns">
-        {{ form.ondertiteling.label }}<br />
-        {{ form.ondertiteling }}
-      </p>
-      <p class="sogo">
-        <input type="submit" value="GO" />
-      </p>
-    </form>
-
+  <div class="container mx-auto mt-10 max-w-xl">  
+      <form action="{{ url_for('main.app_04') }}" method="POST" enctype="multipart/form-data" novalidate class="card shadow-2xl mx-auto px-10 bg-base-200">
+          <div class="form-control card-body">
+              {{ form.hidden_tag() }}
+  
+              <div class="mb-2">
+                  <label for="file-upload" class="label">Upload File</label>
+                  <input
+                      id="file-upload"
+                      type="file"
+                      name="file"
+                      onchange="updateLabel(this);"
+                      class="file-input file-input-bordered file-input-neutral w-full"
+                  />
+                  <script>
+                      function updateLabel(inputElement) {
+                          var labelElement = document.querySelector(
+                              'label[for="file-upload"]'
+                          );
+                          if (inputElement.files.length > 0) {
+                              var fileName = inputElement.files[0].name;
+                              labelElement.innerHTML =
+                                  '✔ <span class="file-name">' + fileName + "</span>";
+                              labelElement.style.color = "green";
+                          } else {
+                              labelElement.innerHTML = "Upload File";
+                              labelElement.style.color = "black";
+                          }
+                      }
+                  </script>
+              </div>
+  
+              <div class="mb-2">
+                  {{ form.programma.label(class_="label") }}
+                  {{ form.programma(class_="input input-bordered w-full") }}
+              </div>
+  
+              <div class="mb-2">
+                  {{ form.wrap.label(class_="label") }}
+                  {{ form.wrap(class_="input input-bordered w-full") }}
+              </div>
+  
+              <div class="mb-2">
+                  {{ form.ondertiteling.label(class_="label") }}
+                  {{ form.ondertiteling(class_="input input-bordered w-full") }}
+              </div>
+          </div>
+  
+          <div class="card-actions justify-end">
+              <input type="submit" value="GO" class="btn btn-secondary btn-outline mb-6 mr-6 text-2xl font-semibold" />
+          </div>
+      </form>
+  </div>
 {% endblock %}

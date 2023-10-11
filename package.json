@@ -1,5 +1,5 @@
 {
-  "name": "movie-library",
+  "name": "mer-app",
   "version": "1.0.0",
   "description": "A Flask app with Tailwind CSS integration",
   "main": "index.js",

@@ -1,17 +1,19 @@
-from flask import Blueprint, render_template, redirect, session, url_for, request, flash, jsonify, send_from_directory, send_file, current_app
-from flask_login import login_user, logout_user, login_required, UserMixin, current_user
-from app import login_manager
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired
+# Standard Library Imports
+import os
+import time
+
+# Third-party Imports
+from flask import Blueprint, render_template, redirect, session, url_for, request, flash, send_from_directory, send_file
+from flask_login import login_required
+from werkzeug.utils import secure_filename
+import pandas as pd
+
+# Local Application Imports
+from .config import UPLOAD_FOLDER
 from .pyscripts.forms import UploadForm, ExcelUploadForm, ColorForm
 from .pyscripts.xlnaarpl import parse_excel_and_generate_playlist
-import pandas as pd
-from .config import UPLOAD_FOLDER, ALLOWED_EXTENSIONS, DEFAULT_THEME, ALTERNATE_THEME
-import os
-from werkzeug.utils import secure_filename
 from .helpers import convert_xls_to_xlsx_with_excel, apply_excel_styles, save_uploaded_file
-import time
+
 
 
 main = Blueprint("main", __name__)
@@ -19,38 +21,33 @@ main = Blueprint("main", __name__)
 @main.route("/")
 @login_required
 def index():
+    """Renders the main index page."""
     return render_template("index.html")
-
-
-# APPS -------------------------------------------------------------
 
 @main.route("/app_01", methods=["GET", "POST"])
 @login_required
 def app_01():
+    """Handles operations for bulk edit"""
     form = UploadForm()
     material_data = session.get('material_data', {})
     show_modal = False
 
     if form.validate_on_submit():
-        
-        file = form.file.data
-        df = pd.read_excel(file)
-        material_ids = df.iloc[:, 0].values.tolist()
-        
-        material_data = {
-            "ids": material_ids,
-            "replace_text": form.replace_text.data,
-            "suffix": form.suffix.data,
-            "material_type": form.material_type.data
-        }
-        
-        session['material_data'] = material_data
-        print(f"after session {material_data}")
-        
-        show_modal = True
-        
-        return render_template("app1.html", form=form, material_data=material_data, show_modal=show_modal)
-        
+        try:
+            file = form.file.data
+            df = pd.read_excel(file)
+            material_ids = df.iloc[:, 0].values.tolist()
+            material_data = {
+                "ids": material_ids,
+                "replace_text": form.replace_text.data,
+                "suffix": form.suffix.data,
+                "material_type": form.material_type.data
+            }
+            session['material_data'] = material_data
+            show_modal = True
+        except Exception as e:
+            flash(f"Error processing data: {str(e)}", "error")
+
     return render_template("app1.html", form=form, material_data=material_data, show_modal=show_modal)
 
 

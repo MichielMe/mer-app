@@ -1,5 +1,6 @@
 <h3 align="center">mer-app</h3>
 
+Uses Flask for backend and TailwindCSS and DaisyUI for styling.
 
 ### Installing
 

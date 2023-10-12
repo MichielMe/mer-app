@@ -12,6 +12,9 @@ import os
 from werkzeug.utils import secure_filename
 from openpyxl import load_workbook
 from openpyxl.styles import PatternFill, Font
+import win32com.client as win32
+import pythoncom
+import time
 
 
 main = Blueprint("main", __name__)
@@ -31,6 +34,28 @@ class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
+    
+    
+def convert_xls_to_xlsx_with_excel(input_file):
+    pythoncom.CoInitialize()  # Initialize the COM library
+    output_file = input_file + 'x'
+    excel = win32.gencache.EnsureDispatch('Excel.Application')
+    try:
+        # Open the file in Excel
+        wb = excel.Workbooks.Open(input_file)
+
+        # Save the file in the new format
+        wb.SaveAs(output_file, FileFormat=51)  # 51 represents the .xlsx format
+
+        wb.Close()
+    finally:
+        # Ensure Excel is closed
+        excel.Application.Quit()
+        pythoncom.CoUninitialize()  # Uninitialize the COM library
+    
+    time.sleep(5)
+    
+    return output_file
 
 
 @main.route('/login', methods=['GET', 'POST'])
@@ -159,7 +184,15 @@ def app_04():
         filepath = os.path.join(upload_dir, filename)
         print("Saving file as:", filepath)
         file.save(filepath)
+        
+        print("Absolute path of the file to convert:", os.path.abspath(filepath))
 
+        time.sleep(2)
+        
+        if filepath.endswith('.xls'):
+            print("Converting .xls to .xlsx")
+            filepath = convert_xls_to_xlsx_with_excel(filepath)
+        time.sleep(5)
         # Load the workbook
         book = load_workbook(filepath)
 

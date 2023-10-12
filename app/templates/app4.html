@@ -56,8 +56,33 @@
           </div>
   
           <div class="card-actions justify-end">
-              <input type="submit" value="GO" class="btn btn-secondary btn-outline mb-6 mr-6 text-2xl font-semibold" />
+            <input 
+                id="submit-button" 
+                type="button" 
+                value="GO" 
+                class="btn btn-secondary btn-outline mb-6 mr-6 text-2xl font-semibold" 
+                onclick="showSpinnerAndSubmit();" 
+            />
+              <div id="spinner-container" class="hidden mb-6 mr-6">
+                <span class="loading loading-spinner loading-lg text-secondary"></span>
+            </div>
           </div>
       </form>
   </div>
+
+  <script>
+    function showSpinnerAndSubmit() {
+        // Show spinner
+        document.getElementById('spinner-container').classList.remove('hidden');
+        
+        // Hide submit button
+        document.getElementById('submit-button').style.display = 'none';
+    
+        // Submit the form (you can delay this if needed for visual effect)
+        setTimeout(function(){
+            document.querySelector('form').submit();
+        }, 100); // this 100ms delay is just for visual effect. You can adjust or remove it.
+    }
+    
+  </script>
 {% endblock %}

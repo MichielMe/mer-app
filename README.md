@@ -2,7 +2,9 @@
 
 ---
 
-**Technologies Used**: Flask for backend and TailwindCSS & DaisyUI for styling.
+**Technologies Used**: 
+* Flask
+* TailwindCSS & DaisyUI for styling
 
 ## 🚀 Installation
 

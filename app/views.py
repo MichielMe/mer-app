@@ -44,6 +44,7 @@ def app_01():
                 "material_type": form.material_type.data
             }
             session['material_data'] = material_data
+            # COMMIT TO DATABASE
             show_modal = True
         except Exception as e:
             flash(f"Error processing data: {str(e)}", "error")

@@ -18,10 +18,12 @@ def create_app():
     
     # Flask-Login configuration
     login_manager.init_app(app)
-    login_manager.login_view = 'main.login'
+    login_manager.login_view = 'main.login' # type: ignore
     
     from .views import main
+    from .auth import auth_blueprint
     app.register_blueprint(main)
+    app.register_blueprint(auth_blueprint, url_prefix='/auth')
     
     with app.app_context():
         db.create_all()

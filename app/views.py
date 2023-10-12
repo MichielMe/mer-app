@@ -7,86 +7,19 @@ from wtforms.validators import DataRequired
 from .pyscripts.forms import UploadForm, ExcelUploadForm, ColorForm
 from .pyscripts.xlnaarpl import parse_excel_and_generate_playlist
 import pandas as pd
-from .models import Material
+from .config import UPLOAD_FOLDER, ALLOWED_EXTENSIONS, DEFAULT_THEME, ALTERNATE_THEME
 import os
 from werkzeug.utils import secure_filename
-from openpyxl import load_workbook
-from openpyxl.styles import PatternFill, Font
-import win32com.client as win32
-import pythoncom
+from .helpers import convert_xls_to_xlsx_with_excel, apply_excel_styles, save_uploaded_file
 import time
 
 
 main = Blueprint("main", __name__)
 
-UPLOAD_FOLDER = '/uploads'
-ALLOWED_EXTENSIONS = {'xlsx'}
-
-class User(UserMixin):
-    def __init__(self, id):
-        self.id = id
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User(user_id)
-
-class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    submit = SubmitField('Login')
-    
-    
-def convert_xls_to_xlsx_with_excel(input_file):
-    pythoncom.CoInitialize()  # Initialize the COM library
-    output_file = input_file + 'x'
-    excel = win32.gencache.EnsureDispatch('Excel.Application')
-    try:
-        # Open the file in Excel
-        wb = excel.Workbooks.Open(input_file)
-
-        # Save the file in the new format
-        wb.SaveAs(output_file, FileFormat=51)  # 51 represents the .xlsx format
-
-        wb.Close()
-    finally:
-        # Ensure Excel is closed
-        excel.Application.Quit()
-        pythoncom.CoUninitialize()  # Uninitialize the COM library
-    
-    time.sleep(5)
-    
-    return output_file
-
-
-@main.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        if form.username.data == "mer" and form.password.data == "eindregie":
-            user = User(id=1)
-            login_user(user)
-            print("Form data:", form.data)
-            print("Form errors:", form.errors)
-            return redirect(url_for('main.index'))
-        else:
-            flash('Invalid username or password')
-            
-    return render_template('login.html', form=form)
-
-@main.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    return redirect(url_for('main.login'))
-
 @main.route("/")
 @login_required
 def index():
     return render_template("index.html")
-
-@main.route("/testing")
-def testing():
-    return render_template("testing.html")
 
 
 # APPS -------------------------------------------------------------
@@ -163,12 +96,6 @@ def download(filename):
 @main.route("/app_04", methods=["GET", "POST"])
 @login_required
 def app_04():
-    color_mapping = {
-        "yellow": "FFFFCD34",
-        "red": "FFDC2626",
-        "blue": "FF60A5FA",
-        "orange": "FFFB923C",
-    }
     file_uploaded = False  # or False based on your logic
 
     form = ColorForm()
@@ -177,13 +104,8 @@ def app_04():
         if "file" not in request.files:
             return "No file part."
         file = request.files["file"]
-        filename = secure_filename(file.filename)
-        upload_dir = "uploads"
-        if not os.path.exists(upload_dir):
-            os.makedirs(upload_dir)  # Create directory if it doesn't exist
-        filepath = os.path.join(upload_dir, filename)
-        print("Saving file as:", filepath)
-        file.save(filepath)
+        
+        filepath = save_uploaded_file(file)
         
         print("Absolute path of the file to convert:", os.path.abspath(filepath))
 
@@ -192,47 +114,18 @@ def app_04():
         if filepath.endswith('.xls'):
             print("Converting .xls to .xlsx")
             filepath = convert_xls_to_xlsx_with_excel(filepath)
-        time.sleep(5)
-        # Load the workbook
-        book = load_workbook(filepath)
-
-        # Define the target texts and fill colors
-        target_texts_colors = {
-            "VRT": PatternFill(
-                start_color=color_mapping[form.programma.data],
-                end_color=color_mapping[form.programma.data],
-                fill_type="solid",
-            ),
-            "KT_2023WEEK": PatternFill(
-                start_color=color_mapping[form.wrap.data],
-                end_color=color_mapping[form.wrap.data],
-                fill_type="solid",
-            ),
-            "V00": PatternFill(
-                start_color=color_mapping[form.ondertiteling.data],
-                end_color=color_mapping[form.ondertiteling.data],
-                fill_type="solid",
-            ),
+            
+        time.sleep(2)
+        
+        form_data = {
+            'programma': form.programma.data,
+            'wrap': form.wrap.data,
+            'ondertiteling': form.ondertiteling.data
         }
 
-        # Define the font style
-        font_style = Font(bold=True)
+        apply_excel_styles(filepath, form_data)
 
-        # Apply conditional formatting
-        for sheet in book.worksheets:
-            for row in sheet.iter_rows():
-                for cell in row:
-                    if cell.value is not None:
-                        for target_text in target_texts_colors.keys():
-                            if target_text in str(cell.value):
-                                cell.fill = target_texts_colors[target_text]
-                                cell.font = font_style
-                                break
-
-        # Save the workbook
-        book.save(filepath)
-
-        return redirect(url_for("main.download2", filename=filename))
+        return redirect(url_for("main.download2", filename=os.path.basename(filepath)))
     return render_template("app4.html", form=form, file_uploaded=file_uploaded)
 
 @main.route("/download/<filename>")
@@ -248,12 +141,3 @@ def download2(filename):
 @login_required
 def app_05():
     return render_template("app5.html")
-
-# TOGGLE THEME -------------------------------------------------------------
-
-@main.get("/toggle_theme")
-def toggle_theme():
-    current_theme = session.get('theme', 'emerald')
-    new_theme = 'business' if current_theme == 'emerald' else 'emerald'
-    session['theme'] = new_theme
-    return redirect(request.args.get("current_page"))

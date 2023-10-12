@@ -52,7 +52,7 @@
                     <a href="{{ url_for('main.index') }}" class="no-underline hover:text-secondary ml-4 {{ 'text-secondary' if request.path == url_for('main.index') }}">
                         <span class="font-roobertbold uppercase">Home</span>
                     </a>
-                    <a href="{{ url_for('main.logout') }}" class="no-underline hover:text-secondary ml-4">
+                    <a href="{{ url_for('auth.logout') }}" class="no-underline hover:text-secondary ml-4">
                         <span class="font-roobertbold uppercase">Log Out</span>
                     </a>
                 </div>
@@ -84,7 +84,7 @@
                 <a href="{{ url_for('main.index') }}" class="px-4 no-underline hover:text-secondary  {{ 'text-accent' if request.path == url_for('main.index') }}">
                     <span class="font-roobertbold uppercase">Home</span>
                 </a>
-                <a href="{{ url_for('main.logout') }}" class="px-4 no-underline hover:text-secondary">
+                <a href="{{ url_for('auth.logout') }}" class="px-4 no-underline hover:text-secondary">
                     <span class="font-roobertbold uppercase">Log Out</span>
                 </a>
             </ul>

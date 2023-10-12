@@ -2,13 +2,15 @@
 __pycache__/
 *.py[cod]
 *$py.class
-setPath.bat
+
+### Batch ###
+# BatchFiles
+*.bat
+*.cmd
+*.btm
 
 # C extensions
 *.so
-
-config.py
-extrainfo.txt
 
 # Dependency directories
 node_modules/

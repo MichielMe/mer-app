@@ -10,7 +10,7 @@
     <title>MER APP | Log In</title>
 </head>
 <body>
-    <form action="{{ url_for('main.login') }}" method="post" novalidate class="card card-compact w-80 shadow-xl bg-neutral text-neutral-content mx-auto mt-48">
+    <form action="{{ url_for('auth.login') }}" method="post" novalidate class="card card-compact w-80 shadow-xl bg-neutral text-neutral-content mx-auto mt-48">
         <div class="form-control card-body items-center w-full">
             {{ form.hidden_tag() }}
             {{ render_text_field(form.username) }}

@@ -1,8 +1,4 @@
-# mer-app
-
-<p align="center">
-  <strong>mer-app</strong>
-</p>
+# Eindregie Apps
 
 ---
 
@@ -13,22 +9,22 @@
 Follow these steps to get started:
 
 
-'''bash
+```python
 git clone https://github.com/MichielMe/mer-app.git
-'''
+```
 
-'''bash
+```bash
 pip install -r requirements.txt
-'''
+```
 
-'''bash
+```bash
 npm install
-'''
+```
 
-'''bash
+```bash
 npm run build
-'''
+```
 
-'''bash
+```bash
 python main.py
-'''
+```

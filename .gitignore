@@ -3,11 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-### Batch ###
-# BatchFiles
-*.bat
-*.cmd
-*.btm
+setPath.bat
 
 # C extensions
 *.so
@@ -169,6 +165,15 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,batch
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,batch
+
+### Batch ###
+# BatchFiles
+*.bat
+*.cmd
+*.btm
+
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
@@ -188,4 +193,4 @@ cython_debug/
 .history
 .ionide
 
-# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode
+# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,batch

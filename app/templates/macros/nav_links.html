@@ -1,0 +1,44 @@
+{% macro navigation_links(is_mobile=false) %}
+    {% set link_classes = "no-underline hover:text-secondary whitespace-nowrap" %}
+    {% set text_classes = "font-roobertbold uppercase" %}
+    {% set padding = "px-4" if is_mobile else "ml-4" %}
+    
+    <!-- APP LINKS -->
+    <a href="{{ url_for('main.app_01') }}" class="{{ link_classes }} {{ padding }} {{ 'text-secondary' if request.path == url_for('main.app_01') }}">
+        <span class="{{ text_classes }}">Bulk Edit</span>
+    </a>
+    
+    <!-- Uncomment if the 'Erai' link is needed in the future -->
+    <!-- <a href="{{ url_for('main.app_02') }}" class="{{ link_classes }} {{ padding }} {{ 'text-accent' if request.path == url_for('main.app_02') }}">
+        <span class="{{ text_classes }}">Erai</span>
+    </a> -->
+    
+    <a href="{{ url_for('main.app_03') }}" class="{{ link_classes }} {{ padding }} {{ 'text-secondary' if request.path == url_for('main.app_03') }}">
+        <span class="{{ text_classes }}">Excel Naar Schedule</span>
+    </a>
+
+    <a href="{{ url_for('main.app_04') }}" class="{{ link_classes }} {{ padding }} {{ 'text-secondary' if request.path == url_for('main.app_04') }}">
+        <span class="{{ text_classes }}">Afdruk Playlist</span>
+    </a>
+    
+    <a href="{{ url_for('main.app_05') }}" class="{{ link_classes }} {{ padding }} {{ 'text-secondary' if request.path == url_for('main.app_05') }}">
+        <span class="{{ text_classes }}">Purge</span>
+    </a>
+    
+    <!-- EXTERNAL LINKS -->
+    <a href="https://rto365.sharepoint.com/sites/MERincidentenrapport" target="_blank" class="{{ link_classes }} {{ padding }}">
+        <span class="{{ text_classes }}">Regieverslag</span>
+    </a>
+    
+    <a href="http://scheduall.vrt.be/reports/General%20New/TIP%20Dienstrooster%20uitzendregisseurs.html" target="_blank" class="{{ link_classes }} {{ padding }}">
+        <span class="{{ text_classes }}">Planning</span>
+    </a>
+    
+    <a href="{{ url_for('main.index') }}" class="{{ link_classes }} {{ padding }} {{ 'text-accent' if request.path == url_for('main.index') }}">
+        <span class="{{ text_classes }}">Home</span>
+    </a>
+    
+    <a href="{{ url_for('auth.logout') }}" class="{{ link_classes }} {{ padding }}">
+        <span class="{{ text_classes }}">Log Out</span>
+    </a>
+{% endmacro %}

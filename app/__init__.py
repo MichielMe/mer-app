@@ -18,7 +18,7 @@ def create_app():
     
     # Flask-Login configuration
     login_manager.init_app(app)
-    login_manager.login_view = 'main.login' # type: ignore
+    login_manager.login_view = 'auth.login' # type: ignore
     
     from .views import main
     from .auth import auth_blueprint

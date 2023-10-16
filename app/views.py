@@ -139,3 +139,9 @@ def download2(filename):
 @login_required
 def app_05():
     return render_template("app5.html")
+
+
+@main.route("/app_06", methods=["GET", "POST"])
+@login_required
+def app_06():
+    return render_template("app6.html")

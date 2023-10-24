@@ -94,3 +94,4 @@ def save_uploaded_file(file, folder="uploads"):
     filepath = os.path.join(folder, filename)
     file.save(filepath)
     return filepath
+

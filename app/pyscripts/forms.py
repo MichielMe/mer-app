@@ -1,3 +1,4 @@
+from typing import Optional
 from flask_wtf import FlaskForm
 from wtforms import FileField, StringField, SelectField, SubmitField
 from wtforms.validators import DataRequired
@@ -29,6 +30,16 @@ class UploadForm(FlaskForm):
     )
     
     go_submit = SubmitField("GO")
+
+## Form from Bitbucket
+# class VullingenForm(FlaskForm):
+#     title = StringField('Vul hier de titel in', validators=[Optional()])
+#     submit = SubmitField('Zoek')
+#     newtitle = StringField('Vul hier de nieuwe titel in', validators=[Optional()])
+#     material_types = [("COMMERCIAL", "COMMERCIAL"), ("PROGRAMME", "PROGRAMME"), ("JUNCTION", "JUNCTION"), ("LIVE RECORD", "LIVE RECORD")]
+#     material_type = SelectField(u'Material type', choices=material_types, validators=[Optional()])
+#     update = SubmitField('Update')
+
 
 class ExcelUploadForm(FlaskForm):
     file = FileField('Excel File', validators=[

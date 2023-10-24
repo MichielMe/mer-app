@@ -30,10 +30,10 @@ def login():
             return redirect(url_for('main.index'))
         else:
             flash('Invalid username or password')
-    return render_template('login.html', form=form)
+    return render_template('login.html', form=form) # type: ignore
 
 @auth_blueprint.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('auth.login')) # type: ignore

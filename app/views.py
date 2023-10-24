@@ -12,6 +12,7 @@ import pandas as pd
 from .config import UPLOAD_FOLDER
 from .pyscripts.forms import UploadForm, ExcelUploadForm, ColorForm
 from .pyscripts.xlnaarpl import parse_excel_and_generate_playlist
+from .pyscripts.mer_database_api import update_files
 from .helpers import convert_xls_to_xlsx_with_excel, apply_excel_styles, save_uploaded_file
 
 

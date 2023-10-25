@@ -10,15 +10,15 @@
     <p class="text-6xl font-bold text-center">ERAI</p>
 </div>
 <div class="container mx-auto mt-10 max-w-xl">  
-    <div class="card shadow-lg mx-auto px-8 py-8 bg-opacity-60 bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl">
-        <div id="chatbox" class="p-4 space-y-4 overflow-y-auto rounded" style="max-height: 300px;">
-            <div class="botText p-3 rounded-lg bg-blue-300 text-blue-900 shadow-md">
+    <div class="card shadow-lg mx-auto px-8 py-8 glass rounded-xl">
+        <div id="chatbox" class="p-4 space-y-4 overflow-y-auto rounded">
+            <div class="botText p-3 rounded-lg bg-neutral text-neutral-content shadow-md">
                 <span>Hi! What's your question?</span>
             </div>
         </div>
-        <div id="userInput" class="border-t border-blue-300 mt-4 p-4 flex items-center space-x-4">
+        <div id="userInput" class="border-t border-neutral mt-4 p-4 flex items-center space-x-4">
             <input id="textInput" type="text" name="msg" placeholder="Message" class="form-input flex-grow rounded-l shadow-inner" />
-            <button onclick="getBotResponse()" class="btn btn-primary bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white shadow-md">Send</button>
+            <button onclick="getBotResponse()" class="btn btn-primary btn-outline">Send</button>
         </div>
     </div>
 </div>

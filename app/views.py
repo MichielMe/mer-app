@@ -41,17 +41,46 @@ def app_01():
             material_data = {
                 "ids": material_ids,
                 "replace_text": form.replace_text.data,
-                "suffix": form.suffix.data,
+                "suffix": f" {form.suffix.data}",
                 "material_type": form.material_type.data
             }
             session['material_data'] = material_data
-            # COMMIT TO DATABASE
             show_modal = True
         except Exception as e:
             flash(f"Error processing data: {str(e)}", "error")
 
     return render_template("app1.html", form=form, material_data=material_data, show_modal=show_modal)
 
+@main.route("/confirm_update", methods=["POST"])
+@login_required
+def confirm_update():
+    form = UploadForm()
+    show_modal = False
+    material_data = session.get('material_data', {})
+    if 'confirm' in request.form:
+        material_ids = material_data.get('ids', [])
+        successes, failures = 0, 0
+        for material_id in material_ids:
+            success = update_files(material_id, material_data['replace_text'], material_data['suffix'], material_data['material_type'])
+            if success:
+                successes += 1
+            else:
+                failures += 1
+        
+        if successes:
+            js_flash_message = f"Successfully updated {successes} records."
+        elif failures:
+            js_flash_message = f"Failed to update {failures} records."
+        else:
+            js_flash_message = None
+
+        # Clear the material_data from session after use
+        session.pop('material_data', None)
+
+        # Instead of immediately redirecting, render the app1.html template with the js_flash_message variable
+        return render_template("app1.html", form=form, material_data={}, show_modal=show_modal, js_flash_message=js_flash_message)
+        
+    return redirect(url_for('main.app_01'))
 
 
 @main.route("/app_02", methods=["GET", "POST"])

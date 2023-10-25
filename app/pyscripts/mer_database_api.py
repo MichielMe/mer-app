@@ -1,7 +1,7 @@
 import requests
 import json
 
-def update_files(material_id, text_to_append, new_material_type):
+def update_files(material_id, replace_text, text_to_append, new_material_type):
     # Construct the endpoint URL using the material_id for filtering
     GET_ENDPOINT = f'http://127.0.0.1:8090/api/collections/MERdata/records/?filter=(material_id="{material_id}")'
     
@@ -18,7 +18,12 @@ def update_files(material_id, text_to_append, new_material_type):
     
     record = records['items'][0]  # Accessing the record correctly
     current_title = record.get('title', '')
-    updated_title = current_title + text_to_append
+    
+    # Check if replace_text is provided and replace it in the title, otherwise append the suffix
+    if replace_text:
+        updated_title = current_title.replace(replace_text, text_to_append)
+    else:
+        updated_title = current_title + text_to_append
     
     # Data to update
     data = {

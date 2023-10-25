@@ -29,33 +29,51 @@
             </div>
         </form>
     </div>
-
-
+        
 
     <!-- The modal structure -->
     <dialog id="confirmModal" class="modal">
         <div class="modal-box w-11/12 max-w-5xl">
-        <h2 class="text-xl font-roobertbold mb-4">Aanpassen database</h2>
-        <p>Ben je zeker dat je de volgende ID's wilt aanpassen?</p>
-        <!-- Display the data in the modal -->
-        {% if material_data %}
-            <div class="grid grid-cols-4 gap-2 my-6">
-                <p>Replace Text: <span class="font-roobertbold">{{ material_data.replace_text }}</span></p>
-                <p>Suffix: <span class="font-roobertbold">{{ material_data.suffix }}</span></p>
-                <p>Material Type: <span class="font-roobertbold">{{ material_data.material_type }}</span></p>
+            <h2 class="text-xl font-roobertbold mb-4">Aanpassen database</h2>
+            <p>Ben je zeker dat je de volgende ID's wilt aanpassen?</p>
+            <!-- Display the data in the modal -->
+            {% if material_data %}
+                <div class="grid grid-cols-4 gap-2 my-6">
+                    <p>Replace Text: <span class="font-roobertbold">{{ material_data.replace_text }}</span></p>
+                    <p>Suffix: <span class="font-roobertbold">{{ material_data.suffix }}</span></p>
+                    <p>Material Type: <span class="font-roobertbold">{{ material_data.material_type }}</span></p>
+                </div>
+                <div class="container">
+                    <ul class="grid grid-cols-4">
+                        {% for id in material_data.ids %}
+                            <li>{{ id }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            <div class="modal-action">
+                <button class="btn" onclick="closeModalAndSubmit()">Yes, I confirm</button>
+                <button class="btn btn-error" onclick="closeModal()">Cancel</button>
             </div>
-            <div class="container">
-                <ul class="grid grid-cols-4">
-                    {% for id in material_data.ids %}
-                        <li>{{ id }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endif %}
-        <div class="modal-action">
-            <button class="btn" onclick="closeModalAndSubmit()">Yes, I confirm</button>
-            <button class="btn btn-error" onclick="closeModal()">Cancel</button>
+            <form id="confirmForm" method="post" action="{{ url_for('main.confirm_update') }}">
+                <input type="hidden" name="confirm" value="1">
+            </form>
         </div>
+    </dialog>
+    <dialog id="flashModal" class="modal">
+        <div class="modal-box w-11/12 max-w-2xl">
+            <h2 class="text-xl font-roobertbold mb-4">Proficiat!</h2>
+
+                {% if js_flash_message %}
+
+                    <p class="font-roobertbold text-2xl">{{ js_flash_message }}</p>
+                    <div class="tenor-gif-embed" data-postid="17293274" data-share-method="host" data-aspect-ratio="1.49533" data-width="100%"><a href="https://tenor.com/view/kid-good-job-great-job-nod-tuanis-gif-17293274">Kid Good Job GIF</a>from <a href="https://tenor.com/search/kid-gifs">Kid GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+
+                {% endif %}
+
+            <div class="modal-action">
+                <button class="btn" onclick="closeFlashModal()">Close</button>
+            </div>
         </div>
     </dialog>
 
@@ -65,6 +83,12 @@
             {% if show_modal %}
               openModal();
             {% endif %}
+
+            
+            {% if js_flash_message %}
+                openFlashModal();
+            {% endif %}
+           
         });
         
         function openModal() {
@@ -77,10 +101,19 @@
             modal.close();
         }
         
-        // You can keep this function for future use when confirming the data to update the database.
         function closeModalAndSubmit() {
             closeModal();
-            // Later, you can add logic here to update the database.
+            document.getElementById('confirmForm').submit();
+        }
+        
+        function openFlashModal() {
+            const modal = document.getElementById('flashModal');
+            modal.showModal();
+        }
+        
+        function closeFlashModal() {
+            const modal = document.getElementById('flashModal');
+            modal.close();
         }
         
       </script>

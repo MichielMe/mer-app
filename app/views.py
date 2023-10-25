@@ -13,6 +13,7 @@ from .config import UPLOAD_FOLDER
 from .pyscripts.forms import UploadForm, ExcelUploadForm, ColorForm
 from .pyscripts.xlnaarpl import parse_excel_and_generate_playlist
 from .pyscripts.mer_database_api import update_files
+from .pyscripts.chatbot import get_completion
 from .helpers import convert_xls_to_xlsx_with_excel, apply_excel_styles, save_uploaded_file
 
 
@@ -175,3 +176,16 @@ def app_05():
 @login_required
 def app_06():
     return render_template("app6.html")
+
+
+
+@main.route("/chatbot")
+def chatbot():    
+    return render_template("chatbot.html")
+
+@main.route("/get")
+def get_bot_response():    
+    userText = request.args.get('msg')  
+    response = get_completion(userText)  
+    #return str(bot.get_response(userText)) 
+    return response

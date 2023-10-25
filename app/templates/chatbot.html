@@ -1,0 +1,51 @@
+{% from "macros/fields.html" import render_text_field %}
+{% extends 'base.html' %}
+{% block head_content %} 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{% endblock %}
+
+{% block main_content %}
+
+<div class="container mx-auto px-6 py-12">
+    <p class="text-6xl font-bold text-center">ERAI</p>
+</div>
+<div class="container mx-auto mt-10 max-w-xl">  
+    <div class="card shadow-lg mx-auto px-8 py-8 bg-opacity-60 bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl">
+        <div id="chatbox" class="p-4 space-y-4 overflow-y-auto rounded" style="max-height: 300px;">
+            <div class="botText p-3 rounded-lg bg-blue-300 text-blue-900 shadow-md">
+                <span>Hi! What's your question?</span>
+            </div>
+        </div>
+        <div id="userInput" class="border-t border-blue-300 mt-4 p-4 flex items-center space-x-4">
+            <input id="textInput" type="text" name="msg" placeholder="Message" class="form-input flex-grow rounded-l shadow-inner" />
+            <button onclick="getBotResponse()" class="btn btn-primary bg-gradient-to-r from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 text-white shadow-md">Send</button>
+        </div>
+    </div>
+</div>
+
+    <script>
+        function getBotResponse() {
+            var rawText = $("#textInput").val();
+            var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
+            $("#textInput").val("");
+            $("#chatbox").append(userHtml);
+            document
+                .getElementById("userInput")
+                .scrollIntoView({ block: "start", behavior: "smooth" });
+            $.get("/get", { msg: rawText }).done(function (data) {
+                var botHtml = '<p class="botText"><span>' + data + "</span></p>";
+                $("#chatbox").append(botHtml);
+                document
+                    .getElementById("userInput")
+                    .scrollIntoView({ block: "start", behavior: "smooth" });
+            });
+        }
+        $("#textInput").keypress(function (e) {
+            if (e.which == 13) {
+                getBotResponse();
+            }
+        });
+    </script>
+  
+
+{% endblock %}

@@ -1,50 +1,34 @@
 {% from "macros/fields.html" import render_text_field %}
 {% extends 'base.html' %}
-{% block head_content %} 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-{% endblock %}
 
 {% block main_content %}
-
-<div class="container mx-auto px-6 py-12">
-    <p class="text-6xl font-bold text-center">ERAI</p>
+<style>
+    #chat-log {
+        display: grid;
+        gap: 0.5rem;
+    }
+</style>
+<div class="container mx-auto px-40 flex justify-center">
+    <p class="text-6xl font-roobertbold text-neutral">Erai</p>
 </div>
-<div class="container mx-auto mt-10 max-w-xl">  
+
+<div class="container mx-auto mt-6 max-w-4xl">
     <div class="card shadow-lg mx-auto px-8 py-8 glass rounded-xl">
-        <div id="chatbox" class="p-4 space-y-4 overflow-y-auto rounded">
-            <div class="botText p-3 rounded-lg bg-neutral text-neutral-content shadow-md">
-                <span>Hi! What's your question?</span>
-            </div>
+        <!-- Chat Log -->
+        <div id="chat-log" class="h-80 space-y-4 overflow-y-auto rounded botText p-3 bg-base-300 text-base-300-content shadow-xl max-h-96 scrollbar-thin scrollbar-thumb-neutral scrollbar-track-transparent">
         </div>
-        <div id="userInput" class="border-t border-neutral mt-4 p-4 flex items-center space-x-4">
-            <input id="textInput" type="text" name="msg" placeholder="Message" class="form-input flex-grow rounded-l shadow-inner" />
-            <button onclick="getBotResponse()" class="btn btn-primary btn-outline">Send</button>
-        </div>
+
+        <!-- Chat Form -->
+        <form id="chat-form" class="border-t border-neutral mt-4 p-4 flex items-center space-x-4">
+            <label for="message" class="sr-only">Message:</label>
+            <input type="text" id="message" name="message" class="form-input flex-grow rounded-l shadow-inner p-4 border-2 border-solid" placeholder="Type your message..." />
+            <button type="submit" class="btn btn-primary btn-outline">Send</button>
+        </form>
     </div>
 </div>
 
-    <script>
-        function getBotResponse() {
-            var rawText = $("#textInput").val();
-            var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
-            $("#textInput").val("");
-            $("#chatbox").append(userHtml);
-            document
-                .getElementById("userInput")
-                .scrollIntoView({ block: "start", behavior: "smooth" });
-            $.get("/get", { msg: rawText }).done(function (data) {
-                var botHtml = '<p class="botText"><span>' + data + "</span></p>";
-                $("#chatbox").append(botHtml);
-                document
-                    .getElementById("userInput")
-                    .scrollIntoView({ block: "start", behavior: "smooth" });
-            });
-        }
-        $("#textInput").keypress(function (e) {
-            if (e.which == 13) {
-                getBotResponse();
-            }
-        });
+
+    <script src="{{ url_for('static', filename='chat.js') }}">
     </script>
   
 

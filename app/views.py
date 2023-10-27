@@ -6,6 +6,7 @@ import time
 from flask import Blueprint, render_template, redirect, session, url_for, request, flash, send_from_directory, send_file
 from flask_login import login_required
 from werkzeug.utils import secure_filename
+from werkzeug.datastructures import FileStorage
 import pandas as pd
 
 # Local Application Imports
@@ -14,6 +15,7 @@ from .pyscripts.forms import UploadForm, ExcelUploadForm, ColorForm
 from .pyscripts.xlnaarpl import parse_excel_and_generate_playlist
 from .pyscripts.mer_database_api import update_files
 from .pyscripts.chatbot import get_completion
+from .pyscripts.xlToList import extract_wp00_from_excel
 from .helpers import convert_xls_to_xlsx_with_excel, apply_excel_styles, save_uploaded_file
 
 
@@ -177,8 +179,24 @@ def app_05():
 def app_06():
     return render_template("app6.html")
 
+@main.route('/app_07', methods=["GET", "POST"])
+@login_required
+def app_07():
+    form = ExcelUploadForm()
+    download_link = None
+    
+    if form.validate_on_submit():
+        if not os.path.exists(UPLOAD_FOLDER):
+            os.makedirs(UPLOAD_FOLDER)
+            
+        file = form.file.data
+        output_filename = extract_wp00_from_excel(file)
+        download_link = url_for('main.download', filename=output_filename)
+        flash('File processed successfully!', 'success')
+        
+    return render_template("excelToList.html", form=form, download_link=download_link)
 
-
+##########################################################################################
 @main.route("/chatbot")
 def chatbot():    
     return render_template("chatbot.html")

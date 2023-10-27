@@ -17,7 +17,7 @@ def parse_excel_and_generate_playlist(filename):
 
 def read_excel_to_list(f):
     try:
-        book = openpyxl.reader.excel.load_workbook(f)
+        book = openpyxl.reader.excel.load_workbook(f) # type: ignore
     except (InvalidFileException, FileNotFoundError) as e:
         logging.error(str(e))
         return []

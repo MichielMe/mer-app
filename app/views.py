@@ -14,7 +14,6 @@ from .config import UPLOAD_FOLDER
 from .pyscripts.forms import UploadForm, ExcelUploadForm, ColorForm
 from .pyscripts.xlnaarpl import parse_excel_and_generate_playlist
 from .pyscripts.mer_database_api import update_files
-from .pyscripts.chatbot import send_messages
 from .pyscripts.xlToList import extract_wp00_from_excel
 from .helpers import convert_xls_to_xlsx_with_excel, apply_excel_styles, save_uploaded_file
 
@@ -197,26 +196,3 @@ def app_07():
     return render_template("excelToList.html", form=form, download_link=download_link)
 
 ##########################################################################################
-
-@main.route("/chat", methods=['GET', 'POST'])
-def chat():
-    if request.method == 'POST':
-        messages = request.json['messages'] # type: ignore
-        def event_stream():
-            for line in send_messages(messages=messages):
-                print(line)
-                text = line.choices[0].delta.get('content', '') # type: ignore
-                if len(text): 
-                    yield text
-
-        return Response(event_stream(), mimetype='text/event-stream')
-    else:
-        return stream_template('chatbot.html')
-        
-
-# @main.route("/get")
-# def get_bot_response():    
-#     userText = request.args.get('msg')  
-#     response = get_completion(userText)  
-#     #return str(bot.get_response(userText)) 
-#     return response

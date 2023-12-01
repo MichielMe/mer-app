@@ -62,26 +62,30 @@ def confirm_update():
     if 'confirm' in request.form:
         material_ids = material_data.get('ids', [])
         successes, failures = 0, 0
+        not_found_ids = []  # List to store IDs that weren't found
+
         for material_id in material_ids:
-            success = update_files(material_id, material_data['replace_text'], material_data['suffix'], material_data['material_type'])
-            if success:
+            result = update_files(material_id, material_data['replace_text'], material_data['suffix'], material_data['material_type'])
+            print(f"Update status for {material_id}: {result}")
+            if result == "Success":
                 successes += 1
+            elif result == "Error: File doesn't exist in MER database":
+                not_found_ids.append(material_id)  # Add the ID to the list
             else:
                 failures += 1
-        
+
+        js_flash_message = ""
         if successes:
-            js_flash_message = f"Successfully updated {successes} records."
-        elif failures:
-            js_flash_message = f"Failed to update {failures} records."
-        else:
-            js_flash_message = None
+            js_flash_message += f"Successfully updated {successes} records. <br>"
+        if not_found_ids:
+            not_found_message = ", ".join(not_found_ids)
+            js_flash_message += f"The following IDs were not found in MER database: <br>{not_found_message}. "
+        if failures:
+            js_flash_message += f"Failed to update {failures} records.<br>"
 
-        # Clear the material_data from session after use
         session.pop('material_data', None)
-
-        # Instead of immediately redirecting, render the app1.html template with the js_flash_message variable
         return render_template("app1.html", form=form, material_data={}, show_modal=show_modal, js_flash_message=js_flash_message)
-        
+
     return redirect(url_for('main.app_01'))
 
 

@@ -16,7 +16,7 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
     "autoprefixer": "^10.4.16",
-    "daisyui": "^3.7.7",
+    "daisyui": "^4.4.19",
     "postcss": "^8.4.30",
     "tailwindcss": "^3.3.3"
   }

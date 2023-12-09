@@ -2,7 +2,8 @@
  {% from "macros/footer.html" import footer %}
 
 <!DOCTYPE html>
-<html lang="en" data-theme="vrttheme" style="background-image: url('../static/img/ER8.png');" class="bg-fixed bg-cover bg-center">
+<html lang="en" data-theme="vrttheme">
+    <!-- style="background-image: url('../static/img/ER8.png');" class="bg-fixed bg-cover bg-center" -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +15,8 @@
 
     {% block head_content %} {% endblock %}
 </head>
-<body class="flex flex-col h-screen font-roobert backdrop-grayscale bg-white/75">
+<body class="flex flex-col h-screen font-roobert bg-base-200">
+    <!-- backdrop-grayscale bg-white/75 -->
 {{ header() }}
     <main class="main flex-grow p-12 pt-12 pb-8">
         {% block main_content %}

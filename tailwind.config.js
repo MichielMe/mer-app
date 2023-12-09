@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  // darkMode: 'class',
-  content: ['./app/templates/*.html', './app/templates/macros/*.html'],
+  darkMode: 'media', // or 'media' or 'class'
+  content: ['./app/templates/*.html', './app/templates/macros/*.html', "./templates/**/*.html", "./static/src/**/*.js"],
   theme: {
     extend: {
       fontFamily: {
@@ -22,25 +22,37 @@ module.exports = {
         "primary": "#00BEAA",
         "secondary": "#5541F0",
         "accent": "#FF3C78",
-        "neutral": "#031037",
-        "base-100": "#ffffff",
+        "neutral": "#3F4865",
+        "base-100": "#F2EFF0",
         "info": "#0081FF",
         "success": "#3ECF6E",
         "warning": "#FFBE32",
         "error": "#FF4944",
-          },
+        ...require("daisyui/src/theming/themes")["vrttheme"],
         },
-      "emerald", 
-      "business", 
-      "black",
+      },
+      {
+        vrtdarkmode: {
+        "primary": "#00BEAA",
+        "secondary": "#5541F0",
+        "accent": "#FF3C78",
+        "neutral": "#c0c3cd",
+        "base-100": "#020b26", // of#020b26
+        "info": "#0081FF",
+        "success": "#3ECF6E",
+        "warning": "#FFBE32",
+        "error": "#FF4944",
+        ...require("daisyui/src/theming/themes")["vrtdarkmode"],
+        }
+      }, 
     ], // true: all themes | false: only light + dark | array: specific themes like this ["light", "dark", "cupcake"]
-    darkTheme: "business", // name of one of the included themes for dark mode
+    darkTheme: "vrtdarkmode", // name of one of the included themes for dark mode
     base: true, // applies background color and foreground color for root element by default
     styled: true, // include daisyUI colors and design decisions for all components
     utils: true, // adds responsive and modifier utility classes
-    rtl: false, // rotate style direction from left-to-right to right-to-left. You also need to add dir="rtl" to your html tag and install `tailwindcss-flip` plugin for Tailwind CSS.
     prefix: "", // prefix for daisyUI classnames (components, modifiers and responsive class names. Not colors)
     logs: true, // Shows info about daisyUI version and used config in the console when building your CSS
+    themeRoot: ":root", // The element that receives theme color CSS variables
   },
 }
 

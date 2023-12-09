@@ -27,9 +27,9 @@ def index():
     """Renders the main index page."""
     return render_template("index.html")
 
-@main.route("/app_01", methods=["GET", "POST"])
+@main.route("/bulk_edit", methods=["GET", "POST"])
 @login_required
-def app_01():
+def bulk_edit():
     """Handles operations for bulk edit"""
     form = UploadForm()
     material_data = session.get('material_data', {})
@@ -51,7 +51,7 @@ def app_01():
         except Exception as e:
             flash(f"Error processing data: {str(e)}", "error")
 
-    return render_template("app1.html", form=form, material_data=material_data, show_modal=show_modal)
+    return render_template("bulk_edit.html", form=form, material_data=material_data, show_modal=show_modal)
 
 @main.route("/confirm_update", methods=["POST"])
 @login_required
@@ -84,7 +84,7 @@ def confirm_update():
             js_flash_message += f"Failed to update {failures} records.<br>"
 
         session.pop('material_data', None)
-        return render_template("app1.html", form=form, material_data={}, show_modal=show_modal, js_flash_message=js_flash_message)
+        return render_template("bulk_edit.html", form=form, material_data={}, show_modal=show_modal, js_flash_message=js_flash_message)
 
     return redirect(url_for('main.app_01'))
 
@@ -198,5 +198,3 @@ def app_07():
         flash('File processed successfully!', 'success')
         
     return render_template("excelToList.html", form=form, download_link=download_link)
-
-##########################################################################################

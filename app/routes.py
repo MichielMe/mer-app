@@ -86,7 +86,7 @@ def confirm_update():
         session.pop('material_data', None)
         return render_template("bulk_edit.html", form=form, material_data={}, show_modal=show_modal, js_flash_message=js_flash_message)
 
-    return redirect(url_for('main.app_01'))
+    return redirect(url_for('main.bulk_edit'))
 
 
 @main.route("/app_02", methods=["GET", "POST"])
